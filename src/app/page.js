@@ -1,3 +1,4 @@
+import Modal from "@/components/Modal";
 import Navbar from "@/components/Navbar";
 
 
@@ -8,6 +9,7 @@ export default function Home() {
       <div className="text-white text-center text-4xl pt-20">
         Hi, Sign Up or Sign In
       </div>
+      <Modal />
     </div>
   );
 }
