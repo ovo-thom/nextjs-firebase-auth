@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../../lib/firebase";
+import { useAuth } from "@/contexts/AuthContext";
 
 function Modal({ type, closeModal }) {
   const [email, setEmail] = useState("");
@@ -12,6 +13,7 @@ function Modal({ type, closeModal }) {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { user, logout } = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,7 +29,6 @@ function Modal({ type, closeModal }) {
 
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // Utilisateur inscrit avec succès
           const user = userCredential.user;
           console.log("Utilisateur inscrit :", user);
           setLoading(false);
@@ -40,10 +41,8 @@ function Modal({ type, closeModal }) {
           setLoading(false);
         });
     } else {
-      // Connexion de l'utilisateur avec Firebase
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // Utilisateur connecté avec succès
           const user = userCredential.user;
           console.log("Utilisateur connecté :", user);
           setLoading(false);
@@ -61,6 +60,7 @@ function Modal({ type, closeModal }) {
         });
     }
   };
+
   return (
     <div className="fixed inset-0 text-white bg-black/50 flex justify-center items-center">
       <div className="relative w-96 bg-white rounded-lg p-6">
@@ -131,4 +131,5 @@ function Modal({ type, closeModal }) {
     </div>
   );
 }
+
 export default Modal;
